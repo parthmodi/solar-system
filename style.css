@@ -1,0 +1,103 @@
+body, html {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #222 0%, #111 100%);
+  color: #fff;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  text-align: center;
+}
+h1 {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 24px;
+  transform: translateX(-50%);
+  font-size: 2.5rem;
+  color: #fff;
+  text-shadow: 0 2px 8px #000a;
+  pointer-events: none;
+}
+#solarSystemCanvas {
+  display: block;
+  margin: 0;
+  background: #000;
+  border-radius: 0;
+  box-shadow: none;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+.popup {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(30, 30, 40, 0.98);
+  color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 40px #000b;
+  z-index: 10;
+  min-width: 320px;
+  max-width: 90vw;
+  padding: 0;
+  animation: fadeIn 0.2s;
+}
+.popup-content {
+  padding: 28px 32px 18px 32px;
+  position: relative;
+}
+.popup-content ul, .popup-content ul li {
+  text-align: left !important;
+  list-style-position: inside;
+}
+.popup-content ul {
+  margin-left: 0 !important;
+  padding-left: 20px !important;
+}
+.popup-content ul li {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+.popup-close {
+  position: absolute;
+  right: 18px;
+  top: 8px;
+  font-size: 2rem;
+  color: #ffe066;
+  cursor: pointer;
+}
+#popupTitle {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 2rem;
+  color: #ffe066;
+  letter-spacing: 1px;
+}
+#popupBody {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -60%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+.planet-glow {
+  pointer-events: none;
+  position: absolute;
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: 0 0 32px 12px #fff8, 0 0 0 2px #ffe066;
+  opacity: 0.85;
+  animation: glowFadeIn 0.18s;
+}
+@keyframes glowFadeIn {
+  from { opacity: 0; }
+  to { opacity: 0.85; }
+}
