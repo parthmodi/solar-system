@@ -16,6 +16,12 @@
     </div>
   </div>
   <canvas id="solarSystemCanvas"></canvas>
+  <!-- Animation Speed Controls -->
+  <div id="speed-controls" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; align-items: center;">
+    <button id="slow-down-btn" class="solar-btn">⏪ Slow Down</button>
+    <div id="speed-indicator" style="background: #222a; color: #ffe066; padding: 6px 16px; border-radius: 18px; font-size: 1.1em; min-width: 70px; text-align: center; margin: 0 10px; user-select: none;">1×</div>
+    <button id="speed-up-btn" class="solar-btn">⏩ Speed Up</button>
+  </div>
   <script src="main.js"></script>
 </body>
 </html>

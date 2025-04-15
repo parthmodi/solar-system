@@ -26,9 +26,10 @@ const popupClose = document.getElementById('popupClose');
 function getScaleFactor() {
   // The largest planet's orbit + radius should fit within the smallest window dimension
   const maxOrbit = Math.max(...PLANETS.map(p => p.orbit + p.radius));
-  const margin = 40; // pixels
-  const minDim = Math.min(window.innerWidth, window.innerHeight);
-  return (minDim/2 - margin) / maxOrbit;
+  const marginTop = 100; // px, enough for title
+  const marginBottom = 120; // px, enough for buttons
+  const minDim = Math.min(window.innerWidth, window.innerHeight - marginTop - marginBottom);
+  return (minDim/2) / maxOrbit;
 }
 
 let scale = getScaleFactor();
@@ -151,8 +152,85 @@ function draw() {
   ctx.restore();
 }
 
+// --- Animation Speed Controls ---
+const speedUpBtn = document.getElementById('speed-up-btn');
+const slowDownBtn = document.getElementById('slow-down-btn');
+const speedIndicator = document.getElementById('speed-indicator');
+
+let speedMultiplier = 1;
+let speedInterval = null;
+const SPEED_STEP = 0.25;
+const SPEED_MIN = 0.1;
+const SPEED_MAX = 8;
+
+function updateSpeedIndicator() {
+  speedIndicator.textContent = speedMultiplier.toFixed(2).replace(/\.00$/, '') + '×';
+  speedIndicator.style.transition = 'color 0.2s';
+  if (speedMultiplier > 1) {
+    speedIndicator.style.color = '#7fff7f';
+  } else if (speedMultiplier < 1) {
+    speedIndicator.style.color = '#ffb400';
+  } else {
+    speedIndicator.style.color = '#ffe066';
+  }
+}
+
+function setSpeedMultiplier(mult) {
+  speedMultiplier = Math.max(SPEED_MIN, Math.min(SPEED_MAX, mult));
+  updateSpeedIndicator();
+}
+
+function handleSpeedChange(delta) {
+  setSpeedMultiplier(speedMultiplier + delta);
+}
+
+function resetSpeedGradually(duration = 800) {
+  const start = performance.now();
+  const initial = speedMultiplier;
+  const target = 1;
+  function step(now) {
+    const elapsed = now - start;
+    const t = Math.min(elapsed / duration, 1);
+    speedMultiplier = initial + (target - initial) * t;
+    updateSpeedIndicator();
+    if (t < 1) {
+      requestAnimationFrame(step);
+    } else {
+      speedMultiplier = target;
+      updateSpeedIndicator();
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+function stopSpeedChange() {
+  if (speedInterval) {
+    clearInterval(speedInterval);
+    speedInterval = null;
+  }
+  resetSpeedGradually(); // Gradually return to normal speed
+}
+
+function startSpeedChange(delta) {
+  handleSpeedChange(delta); // instant feedback
+  if (speedInterval) clearInterval(speedInterval);
+  speedInterval = setInterval(() => handleSpeedChange(delta), 100);
+}
+
+speedUpBtn.addEventListener('mousedown', () => startSpeedChange(SPEED_STEP));
+speedUpBtn.addEventListener('mouseup', stopSpeedChange);
+speedUpBtn.addEventListener('mouseleave', stopSpeedChange);
+speedUpBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startSpeedChange(SPEED_STEP); });
+speedUpBtn.addEventListener('touchend', stopSpeedChange);
+
+slowDownBtn.addEventListener('mousedown', () => startSpeedChange(-SPEED_STEP));
+slowDownBtn.addEventListener('mouseup', stopSpeedChange);
+slowDownBtn.addEventListener('mouseleave', stopSpeedChange);
+slowDownBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startSpeedChange(-SPEED_STEP); });
+slowDownBtn.addEventListener('touchend', stopSpeedChange);
+
 function animate() {
-  if (!paused) time += 1;
+  if (!paused) time += 1 * speedMultiplier;
   draw();
   requestAnimationFrame(animate);
 }
@@ -348,3 +426,5 @@ const PLANET_FACTS = [
     ]
   }
 ];
+
+updateSpeedIndicator();

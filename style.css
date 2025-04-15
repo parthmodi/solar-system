@@ -11,14 +11,17 @@ body, html {
 }
 h1 {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   left: 50%;
-  top: 24px;
+  top: 36px;
   transform: translateX(-50%);
   font-size: 2.5rem;
   color: #fff;
   text-shadow: 0 2px 8px #000a;
   pointer-events: none;
+  background: rgba(0,0,0,0.4);
+  border-radius: 20px;
+  padding: 0.2em 1.4em;
 }
 #solarSystemCanvas {
   display: block;
@@ -31,7 +34,7 @@ h1 {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 0;
+  z-index: 1;
 }
 .popup {
   position: fixed;
@@ -100,4 +103,42 @@ h1 {
 @keyframes glowFadeIn {
   from { opacity: 0; }
   to { opacity: 0.85; }
+}
+.solar-btn {
+  background: #111;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 18px;
+  font-size: 2rem;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-weight: 700;
+  padding: 16px 36px;
+  margin: 0 8px;
+  box-shadow: 0 2px 16px #000a;
+  transition: background 0.2s, color 0.2s, border 0.2s, transform 0.1s;
+  outline: none;
+  cursor: pointer;
+}
+.solar-btn:hover, .solar-btn:active, .solar-btn:focus {
+  background: #222;
+  color: #ffe066;
+  border-color: #ffe066;
+  transform: scale(1.09);
+}
+.solar-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+#speed-controls {
+  z-index: 3;
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  background: rgba(0,0,0,0.3);
+  border-radius: 24px;
+  padding: 8px 16px;
+  box-shadow: 0 2px 16px #0007;
 }
