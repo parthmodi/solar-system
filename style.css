@@ -4,11 +4,29 @@ body, html {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: radial-gradient(ellipse at center, #222 0%, #111 100%);
+  /* New space-like background: deep blue-black, subtle vignette, stars */
+  background: radial-gradient(ellipse at center, #23243a 0%, #11131a 70%, #070812 100%);
   color: #fff;
   font-family: 'Segoe UI', Arial, sans-serif;
   text-align: center;
+  position: relative;
 }
+
+body::before {
+  content: '';
+  position: fixed;
+  z-index: 0;
+  left: 0; top: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  background-image:
+    repeating-radial-gradient(circle at 12% 18%, #fff 1px, transparent 2px, transparent 110px),
+    repeating-radial-gradient(circle at 82% 76%, #fff 1.1px, transparent 2.5px, transparent 160px),
+    repeating-radial-gradient(circle at 55% 64%, #ffe066 0.8px, transparent 2px, transparent 180px),
+    repeating-radial-gradient(circle at 28% 92%, #fff 0.9px, transparent 2.2px, transparent 150px);
+  background-size: cover;
+  opacity: 0.25;
+}
+
 h1 {
   position: absolute;
   z-index: 3;

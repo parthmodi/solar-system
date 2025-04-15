@@ -133,6 +133,7 @@ function drawLabels(planet, angle, isHovered) {
   ctx.restore();
 }
 
+
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.save();
